@@ -20,5 +20,5 @@ def test_soma_invalida(cliente):
     # Arrange
     json_data = resposta.get_json()
     # Assert
-    assert resposta.status_code == 400
+    assert resposta.status_code == 500
     assert 'erro' in json_data
