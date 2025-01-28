@@ -10,7 +10,7 @@ def soma():
         resultado = a + b
         return jsonify({'resultado': resultado})
     except ValueError:
-        return jsonify({'erro': 'Parâmetro inválido'}), 400
+        return jsonify({'erro': 'Parâmetro inválido'}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
