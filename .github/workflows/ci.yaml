@@ -1,4 +1,4 @@
-name: CI - Testes Automatizados
+name: CI/CD - Pipeline Completo
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
       - name: Configurar ambiente Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: '3.10'
 
       - name: Instalar dependências
         run: |
@@ -70,3 +70,31 @@ jobs:
       - name: Rodar testes com pytest
         run: |
           pytest test_app.py
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test  # Depende do job de teste
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v3
+
+      - name: Configurar ambiente Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Instalar dependências
+        run: |
+          python -m pip install --upgrade pip
+          pip install flask pytest
+
+      - name: Disparar deploy no Render
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}  # Adicione sua chave API do Render como secret no GitHub
+        run: |
+          curl -s -X POST "https://api.render.com/v1/services/<service-id>/deploys" \
+            -H "Authorization: Bearer $RENDER_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{
+                  "clearCache": "clear"
+                }'
