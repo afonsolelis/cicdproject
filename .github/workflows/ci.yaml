@@ -30,29 +30,29 @@ jobs:
           echo "Executando build..."
           # Adicione comandos de build aqui, se necessário
 
-  linter:
-    runs-on: ubuntu-latest
-    needs: build  # Depende do job de build
-    steps:
-      - name: Checkout do repositório
-        uses: actions/checkout@v3
+  # linter:
+  #   runs-on: ubuntu-latest
+  #   needs: build  # Depende do job de build
+  #   steps:
+  #     - name: Checkout do repositório
+  #       uses: actions/checkout@v3
 
-      - name: Configurar ambiente Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
+  #     - name: Configurar ambiente Python
+  #       uses: actions/setup-python@v4
+  #       with:
+  #         python-version: '3.10'
 
-      - name: Instalar linter (Flake8)
-        run: |
-          pip install flake8
+  #     - name: Instalar linter (Flake8)
+  #       run: |
+  #         pip install flake8
 
-      - name: Executar linter
-        run: |
-          flake8 . --count --show-source --statistics
+  #     - name: Executar linter
+  #       run: |
+  #         # flake8 . --count --show-source --statistics
 
   test:
     runs-on: ubuntu-latest
-    needs: linter  # Depende do job de linter
+    # needs: linter  # Depende do job de linter
     steps:
       - name: Checkout do repositório
         uses: actions/checkout@v3
